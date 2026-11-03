@@ -1,0 +1,6 @@
+# secrets
+.env
+# local database, downloaded mixes, waveforms, caches
+data/
+.venv/
+__pycache__/

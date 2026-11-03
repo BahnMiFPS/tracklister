@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- YouTube embeds refuse to play (error 153) without a referrer. -->
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>Tracklister</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top">
+  <div class="brand"><span class="logo">◉</span> Tracklister</div>
+  <nav>
+    <button class="tab active" data-view="identify">Identify</button>
+    <button class="tab" data-view="history">History</button>
+    <button class="tab" data-view="saved">Saved</button>
+  </nav>
+</header>
+
+<main>
+  <section id="view-identify">
+    <div id="intro">
+      <h1>What's in that mix?</h1>
+      <p class="sub">Paste a YouTube, SoundCloud, Mixcloud (or any yt-dlp supported) link, or drop an audio file. Everything runs on this machine.</p>
+    </div>
+    <form id="submit-form" class="submit">
+      <input id="url" type="url" placeholder="https://www.youtube.com/watch?v=…" autocomplete="off">
+      <button type="submit">Identify</button>
+    </form>
+    <label class="drop" id="drop">
+      <input type="file" id="file" accept="audio/*,video/*" hidden>
+      or <u>choose / drop an audio file</u>
+    </label>
+
+    <div id="job" class="job hidden">
+      <div class="job-head">
+        <img id="job-thumb" alt="">
+        <div class="job-meta">
+          <div id="job-title" class="job-title"></div>
+          <div id="job-sub" class="job-sub"></div>
+          <div class="progress"><div id="job-bar"></div></div>
+          <div id="job-msg" class="job-msg"></div>
+        </div>
+      </div>
+      <div class="job-actions hidden" id="job-actions">
+        <button id="act-play" class="primary">▶ Play mix</button>
+        <button id="act-save">☆ Save</button>
+        <button id="act-retry">Re-run</button>
+        <button id="act-copy">Copy tracklist</button>
+        <a id="act-csv" class="btn">Download CSV</a>
+        <button id="act-delete" class="danger">Delete</button>
+      </div>
+
+      <div class="overview" id="overview">
+        <canvas id="overview-canvas"></canvas>
+        <div class="overview-tip hidden" id="overview-tip"></div>
+      </div>
+
+      <input id="filter" class="filter hidden" type="search" placeholder="Filter by title, artist, or label">
+      <ol id="tracks" class="tracks"></ol>
+      <p id="credit" class="credit hidden">BPM &amp; key data by <a href="https://getsongbpm.com" target="_blank" rel="noopener">GetSongBPM</a></p>
+    </div>
+  </section>
+
+  <section id="view-list" class="hidden">
+    <input id="search" type="search" placeholder="Search sets, artists, tracks…">
+    <ul id="list" class="list"></ul>
+  </section>
+</main>
+
+<div id="mini" class="mini hidden">
+  <div class="mini-head">
+    <div class="mini-now"><span class="mini-label">Now playing</span><span id="mini-track"></span></div>
+    <button id="mini-close" class="mini-close" title="Close player">✕</button>
+  </div>
+  <div class="mini-video"><div id="yt-frame"></div></div>
+  <div id="mini-audio" class="mini-audio hidden">
+    <button id="audio-toggle" class="round">▶</button>
+    <span id="audio-time">0:00</span>
+  </div>
+</div>
+
+<template id="track-tpl">
+  <li class="track">
+    <div class="row">
+      <button class="cover" title="Play from here">
+        <img class="art" alt="" loading="lazy">
+        <span class="num"></span>
+        <span class="playicon">▶</span>
+      </button>
+      <div class="when">
+        <div class="range"></div>
+        <div class="bpm"></div>
+        <div class="key"></div>
+      </div>
+      <div class="info">
+        <div class="t-title"></div>
+        <div class="t-artist"></div>
+        <div class="t-label"></div>
+      </div>
+      <div class="icons"></div>
+    </div>
+    <canvas class="track-wave"></canvas>
+  </li>
+</template>
+
+<script src="app.js"></script>
+</body>
+</html>
